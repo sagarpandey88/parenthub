@@ -1,0 +1,88 @@
+---
+// No imports needed for inline SVGs
+---
+
+<div class="hidden md:flex items-center space-x-2 border border-foreground/10 rounded-full p-1 bg-background">
+  <button
+    data-theme-value="default"
+    aria-label="Light Blue Theme"
+    title="Light Blue Theme"
+    class="theme-button bg-primary text-background"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-4c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+    </svg>
+    <span class="sr-only">Light Blue Theme</span>
+  </button>
+  <button
+    data-theme-value="pink"
+    aria-label="Light Pink Theme"
+    title="Light Pink Theme"
+    class="theme-button bg-secondary text-background"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+    <span class="sr-only">Light Pink Theme</span>
+  </button>
+  <button
+    data-theme-value="dark"
+    aria-label="Dark Theme"
+    title="Dark Theme"
+    class="theme-button bg-foreground text-background"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+    </svg>
+    <span class="sr-only">Dark Theme</span>
+  </button>
+</div>
+</div>
+
+<style>
+  .theme-button {
+    @apply w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-110;
+  }
+  
+  .theme-button.active {
+    @apply ring-2 ring-offset-2 ring-gray-300 ring-offset-background;
+  }
+</style>
+
+<script>
+  // Theme toggle functionality
+  function setTheme(themeName) {
+    // Remove all theme classes
+    document.documentElement.classList.remove('pink-theme', 'dark-theme');
+    
+    // Add the selected theme class
+    if (themeName !== 'default') {
+      document.documentElement.classList.add(`${themeName}-theme`);
+    }
+    
+    // Save the theme preference
+    localStorage.setItem('theme', themeName);
+  }
+
+  // Set up event listeners for theme toggle buttons
+  document.querySelectorAll('[data-theme-value]').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const themeValue = toggle.getAttribute('data-theme-value');
+      
+      // Reset all toggles
+      document.querySelectorAll('[data-theme-value]').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Set the selected toggle as active
+      toggle.classList.add('active');
+      
+      // Apply the theme
+      setTheme(themeValue);
+    });
+  });
+
+  // Set initial active state
+  const currentTheme = localStorage.getItem('theme') || 'default';
+  document.querySelector(`[data-theme-value="${currentTheme}"]`)?.classList.add('active');
+</script>

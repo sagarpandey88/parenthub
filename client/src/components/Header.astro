@@ -1,0 +1,95 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import SearchButton from './SearchButton.astro';
+---
+
+<header class="fixed top-0 left-0 right-0 bg-background/90 backdrop-blur-md shadow-sm z-40 transition-all duration-300">
+  <div class="container mx-auto py-3">
+    <nav class="flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center space-x-2 text-2xl font-bold text-primary">
+        <span class="text-3xl">👪</span>
+        <span>ParentingHub</span>
+      </a>
+      
+      <!-- Desktop Navigation - Hidden on mobile -->
+      <div class="hidden md:flex items-center space-x-6 nav-bg">
+        <a href="/timeline/pre-pregnancy" class="nav-link">Pre Pregnancy</a>
+        <a href="/timeline/pregnancy" class="nav-link">Pregnancy</a>
+        <a href="/timeline/post-pregnancy" class="nav-link">Post Pregnancy</a>
+        <a href="/timeline/life-with-kids" class="nav-link">Life with kids</a>
+      </div>
+      
+      <!-- Right-side actions -->
+      <div class="flex items-center space-x-3">
+        <SearchButton />
+        <ThemeToggle />
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-bg {
+    background-color: rgba(var(--color-background), 0.85);
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
+    padding: 0.25rem 1.5rem;
+  }
+  .dark .nav-bg, html.dark-theme .nav-bg {
+    background-color: rgba(var(--color-background), 0.95);
+    /* Slightly darker for dark mode */
+  }
+  .nav-link {
+    color: rgba(var(--color-foreground), 0.85);
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+  
+  .nav-link:hover {
+    color: rgb(var(--color-primary));
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(var(--color-primary));
+    transition: width 0.3s;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Active state */
+  .nav-link[aria-current="page"] {
+    color: rgb(var(--color-primary));
+  }
+  
+  .nav-link[aria-current="page"]::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  // Set active nav link based on current path
+  document.addEventListener('astro:page-load', () => {
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-link').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && (href === currentPath || (href !== '/' && currentPath.startsWith(href)))) {
+        link.setAttribute('aria-current', 'page');
+      } else if (href === '/' && currentPath === '/') {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  });
+</script>

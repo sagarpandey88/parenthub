@@ -1,0 +1,87 @@
+---
+---
+
+<button id="search-button" class="inline-flex items-center justify-center p-2 rounded-full bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-colors duration-200" aria-label="Search">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-dark-600 dark:text-dark-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  </svg>
+</button>
+
+<!-- Search Modal -->
+<div id="search-modal" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity duration-300 opacity-0">
+  <div class="absolute top-[15%] left-1/2 -translate-x-1/2 w-full max-w-2xl bg-white dark:bg-dark-800 rounded-xl p-6 shadow-2xl transform -translate-y-10 transition-transform duration-300">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold">Search ParentingHub</h3>
+      <button id="close-search" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <div class="relative">
+      <input 
+        type="text" 
+        id="search-input" 
+        placeholder="Search articles, topics, or keywords..." 
+        class="w-full p-4 pl-12 border border-gray-200 dark:border-dark-700 rounded-lg bg-white dark:bg-dark-800 focus:outline-none focus:ring-2 focus:ring-primary-500"
+      />
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    
+    <div class="mt-6">
+      <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Popular Searches</h4>
+      <div class="flex flex-wrap gap-2">
+        <a href="/search?q=pregnancy" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors">Pregnancy</a>
+        <a href="/search?q=newborn" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors">Newborn</a>
+        <a href="/search?q=breastfeeding" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors">Breastfeeding</a>
+        <a href="/search?q=sleep" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors">Sleep</a>
+        <a href="/search?q=nutrition" class="px-3 py-1 bg-gray-100 dark:bg-dark-700 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-dark-600 transition-colors">Nutrition</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const searchButton = document.getElementById('search-button');
+    const searchModal = document.getElementById('search-modal');
+    const closeSearch = document.getElementById('close-search');
+    const searchInput = document.getElementById('search-input');
+    const modalContent = searchModal?.querySelector('div:first-child');
+    
+    function openModal() {
+      if (!searchModal) return;
+      searchModal.classList.remove('hidden');
+      setTimeout(() => {
+        searchModal.classList.remove('opacity-0');
+        if (modalContent) modalContent.classList.remove('-translate-y-10');
+        searchInput?.focus();
+      }, 10);
+    }
+    
+    function closeModal() {
+      if (!searchModal) return;
+      searchModal.classList.add('opacity-0');
+      if (modalContent) modalContent.classList.add('-translate-y-10');
+      setTimeout(() => {
+        searchModal.classList.add('hidden');
+      }, 300);
+    }
+    
+    searchButton?.addEventListener('click', openModal);
+    closeSearch?.addEventListener('click', closeModal);
+    searchModal?.addEventListener('click', (e) => {
+      if (e.target === searchModal) closeModal();
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchModal && !searchModal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+  });
+</script>

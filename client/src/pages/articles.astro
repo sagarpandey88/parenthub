@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const categories = [
+  'All',
+  'Conception',
+  'Pregnancy',
+  'Delivery',
+  'Post-Pregnancy',
+  'Adventures'
+];
+
+const articles = [
+  {
+    title: 'Understanding Fertility Cycles',
+    excerpt: 'Learn how to track and understand your fertility cycles to optimize your chances of conception.',
+    category: 'Conception',
+    date: 'April 10, 2025',
+    readTime: '7 min read',
+    image: 'https://images.pexels.com/photos/4226901/pexels-photo-4226901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/understanding-fertility-cycles'
+  },
+  {
+    title: 'First Trimester Nutrition Guide',
+    excerpt: 'Essential nutrients and meal planning for a healthy first trimester of pregnancy.',
+    category: 'Pregnancy',
+    date: 'April 8, 2025',
+    readTime: '9 min read',
+    image: 'https://images.pexels.com/photos/4397840/pexels-photo-4397840.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/first-trimester-nutrition'
+  },
+  {
+    title: 'Creating Your Birth Plan',
+    excerpt: 'Step-by-step guide to creating a comprehensive birth plan for your delivery day.',
+    category: 'Delivery',
+    date: 'April 5, 2025',
+    readTime: '8 min read',
+    image: 'https://images.pexels.com/photos/5759233/pexels-photo-5759233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/creating-birth-plan'
+  },
+  {
+    title: 'Postpartum Recovery Essentials',
+    excerpt: 'Everything you need to know about physical and emotional recovery after childbirth.',
+    category: 'Post-Pregnancy',
+    date: 'April 2, 2025',
+    readTime: '10 min read',
+    image: 'https://images.pexels.com/photos/3662861/pexels-photo-3662861.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/postpartum-recovery-essentials'
+  },
+  {
+    title: 'Babys First Flight: Tips & Tricks',
+    excerpt: 'Comprehensive guide to making air travel with your infant stress-free and enjoyable.',
+    category: 'Adventures',
+    date: 'March 28, 2025',
+    readTime: '6 min read',
+    image: 'https://images.pexels.com/photos/298825/pexels-photo-298825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/babys-first-flight'
+  },
+  {
+    title: 'Sleep Training Methods Compared',
+    excerpt: 'An objective comparison of different sleep training methods to find what works for your family.',
+    category: 'Post-Pregnancy',
+    date: 'March 25, 2025',
+    readTime: '11 min read',
+    image: 'https://images.pexels.com/photos/3933455/pexels-photo-3933455.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/sleep-training-methods'
+  },
+  {
+    title: 'Preparing Your Body for Conception',
+    excerpt: 'Lifestyle changes, nutrition tips, and habits to adopt before trying to conceive.',
+    category: 'Conception',
+    date: 'March 22, 2025',
+    readTime: '8 min read',
+    image: 'https://images.pexels.com/photos/6551142/pexels-photo-6551142.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/preparing-for-conception'
+  },
+  {
+    title: 'Second Trimester Exercise Guide',
+    excerpt: 'Safe and effective exercises to keep you fit and healthy during your second trimester.',
+    category: 'Pregnancy',
+    date: 'March 19, 2025',
+    readTime: '7 min read',
+    image: 'https://images.pexels.com/photos/4386476/pexels-photo-4386476.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/second-trimester-exercise'
+  },
+  {
+    title: 'Hospital Bag Checklist',
+    excerpt: 'The ultimate guide to packing your hospital bag for labor, delivery, and the first days with your newborn.',
+    category: 'Delivery',
+    date: 'March 16, 2025',
+    readTime: '5 min read',
+    image: 'https://images.pexels.com/photos/3662790/pexels-photo-3662790.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/hospital-bag-checklist'
+  }
+];
+---
+
+<BaseLayout title="Articles | ParentingHub">
+  <div class="pt-24 pb-12 bg-gradient-to-b from-primary-100 to-white dark:from-dark-800 dark:to-dark-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Articles & Resources</h1>
+        <p class="text-lg text-dark-600 dark:text-dark-300">
+          Discover expert advice, practical tips, and informative content for every stage of your parenting journey.
+        </p>
+        
+        <!-- Search Bar -->
+        <div class="mt-8 max-w-xl mx-auto">
+          <div class="relative">
+            <input 
+              type="text" 
+              placeholder="Search articles..." 
+              class="w-full px-4 py-3 pl-12 rounded-full border border-gray-200 dark:border-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-dark-800"
+            />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <!-- Category Filters -->
+      <div class="flex items-center justify-center flex-wrap gap-3 mb-12">
+        {categories.map((category, index) => (
+          <button 
+            class={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${index === 0 ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-gray-200 dark:hover:bg-dark-700'}`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+      
+      <!-- Articles Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {articles.map(article => (
+          <article class="card group h-full flex flex-col">
+            <div class="relative overflow-hidden">
+              <img 
+                src={article.image} 
+                alt={article.title}
+                class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute top-3 right-3">
+                <span class="bg-white dark:bg-dark-800 px-3 py-1 rounded-full text-xs font-medium text-primary-600 dark:text-primary-400">
+                  {article.category}
+                </span>
+              </div>
+            </div>
+            <div class="p-6 flex-grow flex flex-col">
+              <div class="flex items-center gap-3 text-sm text-dark-500 dark:text-dark-400 mb-2">
+                <span>{article.date}</span>
+                <span>•</span>
+                <span>{article.readTime}</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-3 text-dark-800 dark:text-white">
+                <a href={article.url} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  {article.title}
+                </a>
+              </h3>
+              <p class="text-dark-600 dark:text-dark-300 mb-4 flex-grow">{article.excerpt}</p>
+              <a href={article.url} class="inline-flex items-center font-medium text-primary-600 dark:text-primary-400 hover:underline">
+                Read more
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+      
+      <!-- Pagination -->
+      <div class="mt-12 flex justify-center">
+        <nav class="inline-flex rounded-md shadow-sm">
+          <a href="#" class="px-3 py-2 rounded-l-md border border-gray-300 dark:border-dark-700 bg-white dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-gray-50 dark:hover:bg-dark-700">
+            Previous
+          </a>
+          <a href="#" class="px-3 py-2 border-t border-b border-gray-300 dark:border-dark-700 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">
+            1
+          </a>
+          <a href="#" class="px-3 py-2 border-t border-b border-gray-300 dark:border-dark-700 bg-white dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-gray-50 dark:hover:bg-dark-700">
+            2
+          </a>
+          <a href="#" class="px-3 py-2 border-t border-b border-gray-300 dark:border-dark-700 bg-white dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-gray-50 dark:hover:bg-dark-700">
+            3
+          </a>
+          <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 dark:border-dark-700 bg-white dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-gray-50 dark:hover:bg-dark-700">
+            Next
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: 224, 242, 254;  /* Light blue background */
+    --color-foreground: 14, 45, 95;
+    --color-primary: 59, 130, 246;      /* Bright blue */
+    --color-secondary: 255, 59, 131;
+    --color-accent: 255, 178, 59;
+    --color-muted: 163, 163, 163;
+  }
+
+  html.pink-theme {
+    --color-background: 255, 240, 245;
+    --color-foreground: 95, 14, 43;
+    --color-primary: 255, 59, 131;
+    --color-secondary: 59, 150, 255;
+    --color-accent: 255, 178, 59;
+    --color-muted: 163, 163, 163;
+  }
+
+  html.dark-theme {
+    --color-background: 18, 18, 18;
+    --color-foreground: 245, 245, 245;
+    --color-primary: 59, 150, 255;
+    --color-secondary: 255, 59, 131;
+    --color-accent: 255, 178, 59;
+    --color-muted: 163, 163, 163;
+  }
+
+  body {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    font-family: 'Inter Variable', sans-serif;
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  /* Basic text styles */
+  h1, h2, h3, h4, h5, h6 {
+    color: rgb(var(--color-foreground));
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  /* Button styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .btn-primary {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-background));
+  }
+
+  .btn-primary:hover {
+    background-color: rgba(var(--color-primary), 0.9);
+  }
+
+  .btn-secondary {
+    background-color: rgb(var(--color-secondary));
+    color: rgb(var(--color-background));
+  }
+
+  .btn-secondary:hover {
+    background-color: rgba(var(--color-secondary), 0.9);
+  }
+
+  /* Timeline Specific Styles */
+  .timeline-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: #60a5fa; /* blue-400 */
+    background: linear-gradient(to bottom, #60a5fa 0%, #2563eb 100%); /* blue-400 to blue-700 */
+    border-radius: 9999px;
+    opacity: 0.7;
+    z-index: 0;
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-container {
+      display: block;
+    }
+    .timeline-item {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      width: 100%;
+      margin-bottom: 3rem;
+    }
+    .timeline-item.md\\:flex-row-reverse {
+      flex-direction: row-reverse;
+    }
+    .timeline-content {
+      width: 48%;
+      max-width: 500px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .timeline-content {
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.06);
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .dark .timeline-content {
+    background: #23272f;
+  }
+
+  .timeline-date {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+  }
+
+  .dark .timeline-date {
+    color: #60a5fa;
+  }
+
+  /* Animation classes */
+  .fade-in {
+    @apply animate-fade-in;
+  }
+
+  .slide-up {
+    @apply animate-slide-up;
+  }
+
+  .slide-down {
+    @apply animate-slide-down;
+  }
+
+  /* Touch-friendly elements for mobile */
+  @media (max-width: 768px) {
+    .btn, .card, .timeline-progress-dot {
+      @apply min-h-[44px] min-w-[44px];
+    }
+  }
+}

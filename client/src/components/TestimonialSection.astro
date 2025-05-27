@@ -1,0 +1,61 @@
+---
+const testimonials = [
+  {
+    content: "The pregnancy timeline helped me understand what to expect during each trimester. I felt so much more prepared!",
+    author: "Sarah Johnson",
+    role: "First-time mom",
+    avatar: "https://images.pexels.com/photos/3799214/pexels-photo-3799214.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+  },
+  {
+    content: "The conception resources were invaluable in our journey. After struggling for months, we followed the advice here and got pregnant within two cycles.",
+    author: "Michael & Lisa Chen",
+    role: "Parents of twins",
+    avatar: "https://images.pexels.com/photos/4427610/pexels-photo-4427610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+  },
+  {
+    content: "The postpartum section was a lifesaver. The mental health resources helped me recognize and address my PPD early.",
+    author: "Jessica Williams",
+    role: "Mother of two",
+    avatar: "https://images.pexels.com/photos/7504636/pexels-photo-7504636.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+  }
+];
+---
+
+<section class="py-16 bg-gradient-to-br from-primary-50 to-white dark:from-dark-900 dark:to-dark-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <span class="inline-block text-sm font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider mb-2">Testimonials</span>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">What Parents Say</h2>
+      <p class="text-lg text-dark-600 dark:text-dark-300">
+        Hear from parents who have used ParentingHub to navigate their journey.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {testimonials.map(testimonial => (
+        <div class="bg-white dark:bg-dark-800 p-6 rounded-lg shadow-md relative">
+          <!-- Quotation mark -->
+          <div class="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/20 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+          </div>
+          
+          <p class="text-dark-600 dark:text-dark-300 mb-6 italic">"{testimonial.content}"</p>
+          <div class="flex items-center">
+            <img 
+              src={testimonial.avatar} 
+              alt={testimonial.author}
+              class="w-12 h-12 rounded-full object-cover mr-4"
+              loading="lazy"
+            />
+            <div>
+              <h4 class="font-semibold text-dark-800 dark:text-white">{testimonial.author}</h4>
+              <p class="text-sm text-dark-500 dark:text-dark-400">{testimonial.role}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

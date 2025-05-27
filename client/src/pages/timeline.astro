@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Timeline from '../components/Timeline.astro';
+---
+
+<BaseLayout title="Parenting Timeline | ParentingHub">
+  <div class="pt-24 pb-6 bg-gradient-to-b from-primary-100 to-white dark:from-dark-800 dark:to-dark-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Parenting Timeline</h1>
+        <p class="text-lg text-dark-600 dark:text-dark-300">
+          Explore our comprehensive timeline of the parenting journey, from conception to your child's first adventures.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <Timeline />
+</BaseLayout>

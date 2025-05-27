@@ -1,0 +1,108 @@
+---
+const articles = [
+  {
+    title: 'Understanding Fertility Cycles',
+    excerpt: 'Learn how to track and understand your fertility cycles to optimize your chances of conception.',
+    category: 'Conception',
+    date: 'April 10, 2025',
+    image: 'https://images.pexels.com/photos/4226901/pexels-photo-4226901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/understanding-fertility-cycles'
+  },
+  {
+    title: 'First Trimester Nutrition Guide',
+    excerpt: 'Essential nutrients and meal planning for a healthy first trimester of pregnancy.',
+    category: 'Pregnancy',
+    date: 'April 8, 2025',
+    image: 'https://images.pexels.com/photos/4397840/pexels-photo-4397840.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/first-trimester-nutrition'
+  },
+  {
+    title: 'Creating Your Birth Plan',
+    excerpt: 'Step-by-step guide to creating a comprehensive birth plan for your delivery day.',
+    category: 'Delivery',
+    date: 'April 5, 2025',
+    image: 'https://images.pexels.com/photos/5759233/pexels-photo-5759233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/creating-birth-plan'
+  },
+  {
+    title: 'Postpartum Recovery Essentials',
+    excerpt: 'Everything you need to know about physical and emotional recovery after childbirth.',
+    category: 'Post-Pregnancy',
+    date: 'April 2, 2025',
+    image: 'https://images.pexels.com/photos/3662861/pexels-photo-3662861.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/postpartum-recovery-essentials'
+  },
+  {
+    title: 'Babys First Flight: Tips & Tricks',
+    excerpt: 'Comprehensive guide to making air travel with your infant stress-free and enjoyable.',
+    category: 'Adventures',
+    date: 'March 28, 2025',
+    image: 'https://images.pexels.com/photos/298825/pexels-photo-298825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/babys-first-flight'
+  },
+  {
+    title: 'Sleep Training Methods Compared',
+    excerpt: 'An objective comparison of different sleep training methods to find what works for your family.',
+    category: 'Post-Pregnancy',
+    date: 'March 25, 2025',
+    image: 'https://images.pexels.com/photos/3933455/pexels-photo-3933455.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    url: '/articles/sleep-training-methods'
+  }
+];
+---
+
+<section class="py-16 bg-gray-50 dark:bg-dark-800/30">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <span class="inline-block text-sm font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider mb-2">Latest Articles</span>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured Content</h2>
+      <p class="text-lg text-dark-600 dark:text-dark-300">
+        Dive into our most popular articles written by parenting experts and medical professionals.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {articles.map(article => (
+        <article class="card group h-full flex flex-col">
+          <div class="relative overflow-hidden">
+            <img 
+              src={article.image} 
+              alt={article.title}
+              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div class="absolute top-3 right-3">
+              <span class="bg-white dark:bg-dark-800 px-3 py-1 rounded-full text-xs font-medium text-primary-600 dark:text-primary-400">
+                {article.category}
+              </span>
+            </div>
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <p class="text-sm text-dark-500 dark:text-dark-400 mb-2">{article.date}</p>
+            <h3 class="text-xl font-semibold mb-3 text-dark-800 dark:text-white">
+              <a href={article.url} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                {article.title}
+              </a>
+            </h3>
+            <p class="text-dark-600 dark:text-dark-300 mb-4 flex-grow">{article.excerpt}</p>
+            <a href={article.url} class="inline-flex items-center font-medium text-primary-600 dark:text-primary-400 hover:underline">
+              Read more
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+    
+    <div class="mt-12 text-center">
+      <a href="/articles" class="btn btn-outline py-3 px-6 rounded-lg inline-flex items-center">
+        View All Articles
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
