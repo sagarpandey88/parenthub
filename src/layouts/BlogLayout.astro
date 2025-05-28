@@ -1,0 +1,160 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    category: string;
+    tags: string[];
+    author: string;
+    publishedDate: string;
+    image?: string;
+    readingTime?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const formattedDate = new Date(frontmatter.publishedDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  image={frontmatter.image}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Article Header -->
+    <header class="mb-8">
+      <div class="mb-4">
+        <a
+          href={`/categories/${frontmatter.category.toLowerCase().replace(/\s+/g, '-')}`}
+          class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 hover:bg-primary-200 transition-colors"
+        >
+          {frontmatter.category}
+        </a>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+        {frontmatter.title}
+      </h1>
+      
+      <p class="text-xl text-gray-600 mb-6 leading-relaxed">
+        {frontmatter.description}
+      </p>
+      
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-user"></i>
+          <span>By {frontmatter.author}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fas fa-calendar"></i>
+          <time datetime={frontmatter.publishedDate}>{formattedDate}</time>
+        </div>
+        {frontmatter.readingTime && (
+          <div class="flex items-center gap-2">
+            <i class="fas fa-clock"></i>
+            <span>{frontmatter.readingTime} read</span>
+          </div>
+        )}
+      </div>
+      
+      {frontmatter.image && (
+        <div class="mb-8">
+          <img
+            src={frontmatter.image}
+            alt={frontmatter.title}
+            class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+            loading="lazy"
+          />
+        </div>
+      )}
+    </header>
+    
+    <!-- Article Content -->
+    <div class="prose prose-lg prose-warm max-w-none mb-8">
+      <slot />
+    </div>
+    
+    <!-- Tags -->
+    {frontmatter.tags && frontmatter.tags.length > 0 && (
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">Tags</h3>
+        <div class="flex flex-wrap gap-2">
+          {frontmatter.tags.map((tag) => (
+            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    )}
+    
+    <!-- Share Buttons -->
+    <ShareButtons title={frontmatter.title} />
+    
+    <!-- Author Bio -->
+    <div class="mt-12 p-6 bg-white rounded-lg shadow-sm border">
+      <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center">
+          <i class="fas fa-user text-primary-600 text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-2">{frontmatter.author}</h3>
+          <p class="text-gray-600">
+            Passionate parenting expert and mother of two, dedicated to sharing practical advice 
+            and evidence-based guidance for families on their parenting journey.
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose {
+    @apply text-gray-800;
+  }
+  
+  .prose h2 {
+    @apply text-2xl font-bold text-gray-900 mt-8 mb-4;
+  }
+  
+  .prose h3 {
+    @apply text-xl font-semibold text-gray-900 mt-6 mb-3;
+  }
+  
+  .prose h4 {
+    @apply text-lg font-medium text-gray-900 mt-4 mb-2;
+  }
+  
+  .prose p {
+    @apply mb-4 leading-relaxed;
+  }
+  
+  .prose ul, .prose ol {
+    @apply mb-4 pl-6;
+  }
+  
+  .prose li {
+    @apply mb-2;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-primary-200 pl-4 italic text-gray-700 my-6;
+  }
+  
+  .prose a {
+    @apply text-primary-600 hover:text-primary-800 transition-colors;
+  }
+  
+  .prose img {
+    @apply rounded-lg shadow-md my-6;
+  }
+</style>

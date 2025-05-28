@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://parentingjourney.com/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Main Pages -->
+  <url>
+    <loc>https://parentingjourney.com/blog/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/about/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/contact/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Category Pages -->
+  <url>
+    <loc>https://parentingjourney.com/categories/pre-pregnancy/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/categories/pregnancy/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/categories/post-pregnancy/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://parentingjourney.com/blog/pre-pregnancy-nutrition/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/blog/first-trimester-guide/</loc>
+    <lastmod>2024-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/blog/second-trimester-exercises/</loc>
+    <lastmod>2024-01-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/blog/third-trimester-preparation/</loc>
+    <lastmod>2024-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/blog/newborn-care-essentials/</loc>
+    <lastmod>2024-02-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/blog/breastfeeding-tips/</loc>
+    <lastmod>2024-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/blog/postpartum-recovery/</loc>
+    <lastmod>2024-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://parentingjourney.com/blog/sleep-training-guide/</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- RSS Feed -->
+  <url>
+    <loc>https://parentingjourney.com/rss.xml</loc>
+    <lastmod>2024-02-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>

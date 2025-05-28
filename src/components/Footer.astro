@@ -1,0 +1,132 @@
+---
+// Get current year for copyright
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-4 gap-8">
+      <!-- Brand and Newsletter -->
+      <div class="md:col-span-2">
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+            <i class="fas fa-heart text-white text-sm"></i>
+          </div>
+          <span class="text-xl font-bold">Parenting Journey</span>
+        </div>
+        <p class="text-gray-300 mb-6 max-w-md">
+          Supporting families through every milestone with expert advice, practical tips, and heartfelt guidance 
+          from pre-pregnancy to parenthood.
+        </p>
+        
+        <!-- Newsletter Signup -->
+        <div class="mb-6">
+          <h3 class="font-semibold mb-3">Stay Updated</h3>
+          <form class="flex gap-2">
+            <input
+              type="email"
+              placeholder="Your email address"
+              class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+            <button
+              type="submit"
+              class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+        
+        <!-- Social Links -->
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
+            <i class="fab fa-facebook text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Pinterest">
+            <i class="fab fa-pinterest text-xl"></i>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Categories -->
+      <div>
+        <h3 class="font-semibold mb-4">Categories</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/categories/pre-pregnancy" class="text-gray-300 hover:text-white transition-colors">
+              Pre-Pregnancy
+            </a>
+          </li>
+          <li>
+            <a href="/categories/pregnancy" class="text-gray-300 hover:text-white transition-colors">
+              Pregnancy
+            </a>
+          </li>
+          <li>
+            <a href="/categories/post-pregnancy" class="text-gray-300 hover:text-white transition-colors">
+              Post-Pregnancy
+            </a>
+          </li>
+          <li>
+            <a href="/blog" class="text-gray-300 hover:text-white transition-colors">
+              All Articles
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Quick Links -->
+      <div>
+        <h3 class="font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/about" class="text-gray-300 hover:text-white transition-colors">
+              About Us
+            </a>
+          </li>
+          <li>
+            <a href="/contact" class="text-gray-300 hover:text-white transition-colors">
+              Contact
+            </a>
+          </li>
+          <li>
+            <a href="/rss.xml" class="text-gray-300 hover:text-white transition-colors">
+              RSS Feed
+            </a>
+          </li>
+          <li>
+            <a href="/privacy" class="text-gray-300 hover:text-white transition-colors">
+              Privacy Policy
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-800 mt-8 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">
+          © {currentYear} Parenting Journey. All rights reserved.
+        </p>
+        <div class="flex items-center space-x-6 text-sm">
+          <a href="/privacy" class="text-gray-400 hover:text-white transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/terms" class="text-gray-400 hover:text-white transition-colors">
+            Terms of Service
+          </a>
+          <a href="/sitemap.xml" class="text-gray-400 hover:text-white transition-colors">
+            Sitemap
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

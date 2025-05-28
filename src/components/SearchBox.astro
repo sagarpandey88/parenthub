@@ -1,0 +1,155 @@
+---
+// Search box component for blog filtering
+---
+
+<div class="relative search-container">
+  <div class="relative">
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Search articles..."
+      class="w-full lg:w-80 px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+    />
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <i class="fas fa-search text-gray-400"></i>
+    </div>
+    <button
+      id="search-clear"
+      class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 hidden"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  
+  <!-- Search Results Dropdown -->
+  <div
+    id="search-results"
+    class="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-b-lg shadow-lg hidden max-h-96 overflow-y-auto z-10"
+  >
+    <!-- Results will be populated by JavaScript -->
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const searchClear = document.getElementById('search-clear');
+    
+    if (!searchInput || !searchResults || !searchClear) return;
+    
+    let searchTimeout;
+    
+    // Handle input events
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim();
+      
+      // Show/hide clear button
+      if (query.length > 0) {
+        searchClear.classList.remove('hidden');
+      } else {
+        searchClear.classList.add('hidden');
+        searchResults.classList.add('hidden');
+        return;
+      }
+      
+      // Debounce search
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => performSearch(query), 300);
+    });
+    
+    // Handle clear button
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClear.classList.add('hidden');
+      searchResults.classList.add('hidden');
+      searchInput.focus();
+    });
+    
+    // Handle Enter key
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        if (query.length > 0) {
+          window.location.href = `/blog?search=${encodeURIComponent(query)}`;
+        }
+      }
+    });
+    
+    async function performSearch(query) {
+      if (query.length < 2) {
+        searchResults.classList.add('hidden');
+        return;
+      }
+      
+      try {
+        // Get all blog posts from the current page data
+        const posts = Array.from(document.querySelectorAll('[data-post]')).map(el => ({
+          title: el.dataset.title,
+          description: el.dataset.description,
+          category: el.dataset.category,
+          url: el.dataset.url
+        }));
+        
+        // Filter posts
+        const filteredPosts = posts.filter(post => 
+          post.title.toLowerCase().includes(query.toLowerCase()) ||
+          post.description.toLowerCase().includes(query.toLowerCase()) ||
+          post.category.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        displaySearchResults(filteredPosts, query);
+      } catch (error) {
+        console.error('Search error:', error);
+        searchResults.innerHTML = '<p class="p-4 text-red-500">Search error occurred</p>';
+        searchResults.classList.remove('hidden');
+      }
+    }
+    
+    function displaySearchResults(posts, query) {
+      if (posts.length === 0) {
+        searchResults.innerHTML = `
+          <div class="p-4 text-center">
+            <p class="text-gray-500 mb-2">No results found for "${query}"</p>
+            <a href="/blog?search=${encodeURIComponent(query)}" class="text-primary-600 hover:text-primary-800 text-sm">
+              Search all articles
+            </a>
+          </div>
+        `;
+      } else {
+        const resultsHtml = posts.slice(0, 5).map(post => `
+          <a href="${post.url}" class="block p-4 hover:bg-gray-50 border-b last:border-b-0">
+            <h3 class="font-medium text-gray-900 mb-1">${highlightQuery(post.title, query)}</h3>
+            <p class="text-sm text-gray-600 mb-1">${highlightQuery(post.description, query)}</p>
+            <span class="text-xs text-primary-600">${post.category}</span>
+          </a>
+        `).join('');
+        
+        const viewAllLink = posts.length > 5 ? `
+          <div class="p-4 border-t bg-gray-50">
+            <a href="/blog?search=${encodeURIComponent(query)}" class="text-primary-600 hover:text-primary-800 text-sm font-medium">
+              View all ${posts.length} results
+            </a>
+          </div>
+        ` : '';
+        
+        searchResults.innerHTML = resultsHtml + viewAllLink;
+      }
+      searchResults.classList.remove('hidden');
+    }
+    
+    function highlightQuery(text, query) {
+      if (!text || !query) return text;
+      const regex = new RegExp(`(${query})`, 'gi');
+      return text.replace(regex, '<mark class="bg-yellow-200">$1</mark>');
+    }
+    
+    // Close search results when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-container')) {
+        searchResults.classList.add('hidden');
+      }
+    });
+  });
+</script>

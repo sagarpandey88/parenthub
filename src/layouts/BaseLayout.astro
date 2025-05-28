@@ -1,0 +1,122 @@
+---
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import '@/styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { title, description, image, canonical } = Astro.props;
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
+const socialImage = image || '/images/default-og.jpg';
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImage} />
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Parenting Journey Blog" href="/rss.xml" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet" />
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-warm-50 text-gray-900 font-sans">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    
+    <!-- Search functionality script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        
+        if (searchInput && searchResults) {
+          searchInput.addEventListener('input', async (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query.length < 2) {
+              searchResults.classList.add('hidden');
+              return;
+            }
+            
+            try {
+              const response = await fetch('/search.json');
+              const posts = await response.json();
+              
+              const filteredPosts = posts.filter(post => 
+                post.title.toLowerCase().includes(query) ||
+                post.description.toLowerCase().includes(query) ||
+                post.category.toLowerCase().includes(query)
+              );
+              
+              displaySearchResults(filteredPosts);
+            } catch (error) {
+              console.error('Search error:', error);
+            }
+          });
+        }
+        
+        function displaySearchResults(posts) {
+          if (posts.length === 0) {
+            searchResults.innerHTML = '<p class="p-4 text-gray-500">No results found</p>';
+          } else {
+            searchResults.innerHTML = posts.slice(0, 5).map(post => `
+              <a href="${post.url}" class="block p-4 hover:bg-gray-50 border-b">
+                <h3 class="font-medium text-gray-900">${post.title}</h3>
+                <p class="text-sm text-gray-600">${post.description}</p>
+                <span class="text-xs text-primary-600">${post.category}</span>
+              </a>
+            `).join('');
+          }
+          searchResults.classList.remove('hidden');
+        }
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.search-container')) {
+            searchResults?.classList.add('hidden');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

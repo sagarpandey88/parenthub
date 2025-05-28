@@ -1,0 +1,106 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BlogLayout from '@/layouts/BlogLayout.astro';
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// Get the blog entry
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Get related posts (same category, excluding current post)
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+  .filter(post => 
+    post.data.category === entry.data.category && 
+    post.slug !== entry.slug
+  )
+  .slice(0, 3);
+---
+
+<BlogLayout frontmatter={entry.data}>
+  <Content />
+  
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="mt-16 pt-12 border-t border-gray-200">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-gray-900 mb-8">Related Articles</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedPosts.map((post) => (
+            <article class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+              {post.data.image && (
+                <img
+                  src={post.data.image}
+                  alt={post.data.title}
+                  class="w-full h-48 object-cover rounded-t-lg"
+                  loading="lazy"
+                />
+              )}
+              <div class="p-6">
+                <div class="mb-3">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                    {post.data.category}
+                  </span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                  <a href={`/blog/${post.slug}`} class="hover:text-primary-600 transition-colors">
+                    {post.data.title}
+                  </a>
+                </h3>
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                  {post.data.description}
+                </p>
+                <div class="flex items-center text-xs text-gray-500">
+                  <span>{new Date(post.data.publishedDate).toLocaleDateString()}</span>
+                  {post.data.readingTime && (
+                    <>
+                      <span class="mx-2">•</span>
+                      <span>{post.data.readingTime}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+  
+  <!-- Navigation to Blog Index -->
+  <div class="mt-12 pt-8 border-t border-gray-200">
+    <div class="max-w-4xl mx-auto">
+      <a
+        href="/blog"
+        class="inline-flex items-center text-primary-600 hover:text-primary-800 font-medium"
+      >
+        <i class="fas fa-arrow-left mr-2"></i>
+        Back to All Articles
+      </a>
+    </div>
+  </div>
+</BlogLayout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

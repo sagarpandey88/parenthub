@@ -1,0 +1,134 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContactForm from '@/components/ContactForm.astro';
+---
+
+<BaseLayout
+  title="Contact Us - Parenting Journey"
+  description="Get in touch with the Parenting Journey team. We'd love to hear from you and answer any questions about parenting and family life."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        Contact Us
+      </h1>
+      <p class="text-xl text-gray-600 leading-relaxed">
+        We'd love to hear from you! Whether you have questions, feedback, or want to share your parenting story, 
+        we're here to help and connect with our community.
+      </p>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Contact Information -->
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+        
+        <div class="space-y-6 mb-8">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-envelope text-primary-600"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">Email Us</h3>
+              <p class="text-gray-600 mb-2">
+                Send us your questions, suggestions, or feedback anytime.
+              </p>
+              <a href="mailto:hello@parentingjourney.com" class="text-primary-600 hover:text-primary-800">
+                hello@parentingjourney.com
+              </a>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-clock text-secondary-600"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">Response Time</h3>
+              <p class="text-gray-600">
+                We typically respond to all inquiries within 24-48 hours during business days.
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-warm-200 rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-users text-warm-700"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">Join Our Community</h3>
+              <p class="text-gray-600 mb-2">
+                Connect with other parents and share your experiences.
+              </p>
+              <div class="flex gap-3">
+                <a href="#" class="text-primary-600 hover:text-primary-800">
+                  <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="#" class="text-primary-600 hover:text-primary-800">
+                  <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="#" class="text-primary-600 hover:text-primary-800">
+                  <i class="fab fa-twitter"></i> Twitter
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="bg-gray-50 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Frequently Asked Questions</h3>
+          <div class="space-y-4">
+            <div>
+              <h4 class="font-medium text-gray-900 mb-1">How often do you publish new articles?</h4>
+              <p class="text-gray-600 text-sm">
+                We publish new content weekly, covering various aspects of the parenting journey.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-medium text-gray-900 mb-1">Can I suggest article topics?</h4>
+              <p class="text-gray-600 text-sm">
+                Absolutely! We love hearing from our readers about topics they'd like us to cover.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-medium text-gray-900 mb-1">Do you provide medical advice?</h4>
+              <p class="text-gray-600 text-sm">
+                Our content is for informational purposes only. Always consult your healthcare provider for medical advice.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contact Form -->
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+        <ContactForm />
+      </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <section class="mt-16 bg-primary-600 rounded-lg p-8 text-center text-white">
+      <h2 class="text-2xl font-bold mb-4">Stay Connected</h2>
+      <p class="text-primary-100 mb-6">
+        Subscribe to our newsletter for weekly parenting tips, expert advice, and inspiring stories.
+      </p>
+      <form class="max-w-md mx-auto flex gap-4">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          class="flex-1 px-4 py-3 rounded-lg border-0 text-gray-900 focus:ring-2 focus:ring-primary-300"
+          required
+        />
+        <button
+          type="submit"
+          class="px-6 py-3 bg-white text-primary-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+        >
+          Subscribe
+        </button>
+      </form>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,153 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogCard from '@/components/BlogCard.astro';
+import CategoryFilter from '@/components/CategoryFilter.astro';
+import SearchBox from '@/components/SearchBox.astro';
+import { getCollection } from 'astro:content';
+
+// Get all blog posts
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime()
+);
+
+// Get unique categories
+const categories = [...new Set(allPosts.map(post => post.data.category))];
+
+// Get URL parameters for filtering
+const url = new URL(Astro.request.url);
+const selectedCategory = url.searchParams.get('category');
+const searchQuery = url.searchParams.get('search');
+
+// Filter posts based on URL parameters
+let filteredPosts = sortedPosts;
+
+if (selectedCategory) {
+  filteredPosts = sortedPosts.filter(
+    post => post.data.category.toLowerCase() === selectedCategory.toLowerCase()
+  );
+}
+
+if (searchQuery) {
+  filteredPosts = filteredPosts.filter(
+    post =>
+      post.data.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.data.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.data.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+}
+---
+
+<BaseLayout
+  title="Blog - Parenting Journey"
+  description="Explore our comprehensive collection of parenting articles covering pre-pregnancy, pregnancy, and post-pregnancy topics."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Parenting Blog
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Expert advice, practical tips, and heartfelt stories to guide you through every stage of your parenting journey.
+      </p>
+    </div>
+    
+    <!-- Search and Filter Section -->
+    <div class="mb-12">
+      <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
+        <!-- Search Box -->
+        <div class="w-full lg:w-auto">
+          <SearchBox />
+        </div>
+        
+        <!-- Category Filter -->
+        <CategoryFilter categories={categories} selectedCategory={selectedCategory} />
+      </div>
+    </div>
+    
+    <!-- Results Summary -->
+    <div class="mb-8">
+      <p class="text-gray-600">
+        {selectedCategory && (
+          <span>
+            Showing articles in <strong class="text-primary-600">{selectedCategory}</strong>
+            {searchQuery && <span> matching <strong>"{searchQuery}"</strong></span>}
+          </span>
+        )}
+        {!selectedCategory && searchQuery && (
+          <span>Search results for <strong>"{searchQuery}"</strong></span>
+        )}
+        {!selectedCategory && !searchQuery && (
+          <span>Showing all articles</span>
+        )}
+        - {filteredPosts.length} article{filteredPosts.length !== 1 ? 's' : ''} found
+      </p>
+      
+      {(selectedCategory || searchQuery) && (
+        <a
+          href="/blog"
+          class="inline-flex items-center text-primary-600 hover:text-primary-800 mt-2"
+        >
+          <i class="fas fa-times mr-2"></i>
+          Clear filters
+        </a>
+      )}
+    </div>
+    
+    <!-- Blog Posts Grid -->
+    {filteredPosts.length > 0 ? (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredPosts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-16">
+        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-search text-gray-400 text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No articles found</h3>
+        <p class="text-gray-600 mb-6">
+          {searchQuery 
+            ? `No articles match your search for "${searchQuery}".` 
+            : `No articles found in the ${selectedCategory} category.`
+          }
+        </p>
+        <a
+          href="/blog"
+          class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+        >
+          View All Articles
+        </a>
+      </div>
+    )}
+    
+    <!-- Load More Button (for future pagination) -->
+    {filteredPosts.length > 12 && (
+      <div class="text-center mt-12">
+        <button
+          class="inline-flex items-center px-8 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+          onclick="loadMorePosts()"
+        >
+          Load More Articles <i class="fas fa-chevron-down ml-2"></i>
+        </button>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<script>
+  // Generate search index for client-side search
+  const posts = [
+    ...document.querySelectorAll('[data-post]')
+  ].map(el => ({
+    title: el.dataset.title,
+    description: el.dataset.description,
+    category: el.dataset.category,
+    url: el.dataset.url
+  }));
+  
+  // Export for global search functionality
+  window.searchIndex = posts;
+</script>

@@ -1,0 +1,153 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import BlogCard from '@/components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get recent blog posts
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+  .slice(0, 6);
+
+// Group posts by category
+const categories = {
+  'Pre-Pregnancy': allPosts.filter(post => post.data.category === 'Pre-Pregnancy').slice(0, 2),
+  'Pregnancy': allPosts.filter(post => post.data.category === 'Pregnancy').slice(0, 2),
+  'Post-Pregnancy': allPosts.filter(post => post.data.category === 'Post-Pregnancy').slice(0, 2)
+};
+---
+
+<BaseLayout
+  title="Parenting Journey - Your Complete Guide from Pre-Pregnancy to Parenthood"
+  description="Expert advice and practical tips for every stage of your parenting journey. From pre-pregnancy planning to raising happy, healthy children."
+>
+  <!-- Hero Section -->
+  <HeroSection />
+  
+  <!-- Featured Categories -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Your Complete Parenting Guide
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Navigate every stage of your parenting journey with expert advice, practical tips, and evidence-based guidance.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Pre-Pregnancy -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-heart text-primary-600 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Pre-Pregnancy</h3>
+          <p class="text-gray-600 mb-4">
+            Prepare your body and mind for conception with nutrition, lifestyle, and wellness guidance.
+          </p>
+          <a
+            href="/categories/pre-pregnancy"
+            class="inline-flex items-center text-primary-600 hover:text-primary-800 font-medium"
+          >
+            Learn More <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+        
+        <!-- Pregnancy -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-baby text-secondary-600 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Pregnancy</h3>
+          <p class="text-gray-600 mb-4">
+            Week-by-week guidance through all three trimesters with health tips and milestone tracking.
+          </p>
+          <a
+            href="/categories/pregnancy"
+            class="inline-flex items-center text-secondary-600 hover:text-secondary-800 font-medium"
+          >
+            Learn More <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+        
+        <!-- Post-Pregnancy -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-warm-200 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-home text-warm-700 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Post-Pregnancy</h3>
+          <p class="text-gray-600 mb-4">
+            Recovery, newborn care, breastfeeding support, and early parenting strategies.
+          </p>
+          <a
+            href="/categories/post-pregnancy"
+            class="inline-flex items-center text-warm-600 hover:text-warm-800 font-medium"
+          >
+            Learn More <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Recent Blog Posts -->
+  <section class="py-16 bg-warm-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-12">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Recent Articles</h2>
+          <p class="text-gray-600">Stay updated with our latest parenting insights and tips</p>
+        </div>
+        <a
+          href="/blog"
+          class="hidden md:inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
+        >
+          View All Articles <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {recentPosts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+      
+      <div class="text-center mt-8 md:hidden">
+        <a
+          href="/blog"
+          class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
+        >
+          View All Articles <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Newsletter Signup -->
+  <section class="py-16 bg-primary-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-white mb-4">
+        Stay Connected on Your Parenting Journey
+      </h2>
+      <p class="text-xl text-primary-100 mb-8">
+        Get weekly tips, expert advice, and inspiring stories delivered to your inbox.
+      </p>
+      <form class="max-w-md mx-auto flex gap-4">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          class="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-primary-300"
+          required
+        />
+        <button
+          type="submit"
+          class="px-6 py-3 bg-white text-primary-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

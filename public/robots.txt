@@ -1,0 +1,51 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://parentingjourney.com/sitemap-index.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Disallow common paths that don't need indexing
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+# Allow important pages
+Allow: /blog/
+Allow: /categories/
+Allow: /about
+Allow: /contact
+
+# Block search bot from searching for specific file types
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.docx$
+Disallow: /*.xls$
+Disallow: /*.xlsx$
+
+# Popular search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Block problematic bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

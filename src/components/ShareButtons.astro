@@ -1,0 +1,145 @@
+---
+export interface Props {
+  title: string;
+  url?: string;
+}
+
+const { title, url } = Astro.props;
+const currentUrl = url || Astro.url.href;
+const encodedTitle = encodeURIComponent(title);
+const encodedUrl = encodeURIComponent(currentUrl);
+---
+
+<div class="border-t border-gray-200 pt-8 mt-8">
+  <h3 class="text-lg font-semibold text-gray-900 mb-4">Share this article</h3>
+  <div class="flex flex-wrap gap-3">
+    <!-- Facebook -->
+    <a
+      href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      aria-label="Share on Facebook"
+    >
+      <i class="fab fa-facebook-f mr-2"></i>
+      Facebook
+    </a>
+    
+    <!-- Twitter -->
+    <a
+      href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
+      aria-label="Share on Twitter"
+    >
+      <i class="fab fa-twitter mr-2"></i>
+      Twitter
+    </a>
+    
+    <!-- Pinterest -->
+    <a
+      href={`https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedTitle}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+      aria-label="Share on Pinterest"
+    >
+      <i class="fab fa-pinterest mr-2"></i>
+      Pinterest
+    </a>
+    
+    <!-- LinkedIn -->
+    <a
+      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
+      aria-label="Share on LinkedIn"
+    >
+      <i class="fab fa-linkedin-in mr-2"></i>
+      LinkedIn
+    </a>
+    
+    <!-- Email -->
+    <a
+      href={`mailto:?subject=${encodedTitle}&body=I thought you might find this interesting: ${encodedUrl}`}
+      class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+      aria-label="Share via Email"
+    >
+      <i class="fas fa-envelope mr-2"></i>
+      Email
+    </a>
+    
+    <!-- Copy Link -->
+    <button
+      id="copy-link-btn"
+      data-url={currentUrl}
+      class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+      aria-label="Copy link"
+    >
+      <i class="fas fa-link mr-2"></i>
+      Copy Link
+    </button>
+  </div>
+  
+  <!-- Copy Success Message -->
+  <div id="copy-success" class="hidden mt-2 text-sm text-green-600">
+    <i class="fas fa-check mr-1"></i>
+    Link copied to clipboard!
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const copyBtn = document.getElementById('copy-link-btn');
+    const copySuccess = document.getElementById('copy-success');
+    
+    if (copyBtn && copySuccess) {
+      copyBtn.addEventListener('click', async () => {
+        const url = copyBtn.dataset.url;
+        
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(url);
+          } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = url;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+          }
+          
+          // Show success message
+          copySuccess.classList.remove('hidden');
+          copyBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Copied!';
+          copyBtn.classList.add('bg-green-100', 'text-green-700');
+          
+          // Reset after 3 seconds
+          setTimeout(() => {
+            copySuccess.classList.add('hidden');
+            copyBtn.innerHTML = '<i class="fas fa-link mr-2"></i>Copy Link';
+            copyBtn.classList.remove('bg-green-100', 'text-green-700');
+          }, 3000);
+          
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          // Show error message
+          copyBtn.innerHTML = '<i class="fas fa-times mr-2"></i>Failed';
+          copyBtn.classList.add('bg-red-100', 'text-red-700');
+          
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="fas fa-link mr-2"></i>Copy Link';
+            copyBtn.classList.remove('bg-red-100', 'text-red-700');
+          }, 3000);
+        }
+      });
+    }
+  });
+</script>
