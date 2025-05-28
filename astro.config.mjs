@@ -13,9 +13,21 @@ export default defineConfig({
       theme: 'github-light'
     }
   },
+  server: {
+    host: '0.0.0.0',
+    port: 5000
+  },
   vite: {
     optimizeDeps: {
       exclude: ['@astrojs/content']
+    },
+    server: {
+      host: '0.0.0.0',
+      port: 5000,
+      hmr: {
+        host: '0.0.0.0',
+        port: 5000
+      }
     }
   }
 });
