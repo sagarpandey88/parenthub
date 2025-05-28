@@ -418,4 +418,10 @@ Most importantly, enjoy these precious early days. Your baby will never be this 
 
 ---
 
+import ProductGrid from '@/components/ProductGrid.astro';
+
+<ProductGrid category="newborn" />
+
+---
+
 *This information is for educational purposes only and should not replace professional medical advice. Always consult with your pediatrician about your baby's specific needs and any concerns you may have.*

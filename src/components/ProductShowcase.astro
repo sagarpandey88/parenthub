@@ -1,0 +1,158 @@
+---
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  originalPrice?: string;
+  rating: number;
+  reviews: number;
+  image: string;
+  affiliateLink: string;
+  badge?: string;
+  features?: string[];
+}
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  products: Product[];
+  layout?: 'grid' | 'carousel' | 'featured';
+}
+
+const { 
+  title = "Recommended Products", 
+  subtitle = "Carefully selected products to support your parenting journey",
+  products = [],
+  layout = 'grid'
+} = Astro.props;
+---
+
+<section class="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl p-8 my-12 border border-primary-100">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-3">{title}</h2>
+    <p class="text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+    <div class="mt-4 text-sm text-gray-500 flex items-center justify-center">
+      <i class="fas fa-info-circle mr-2"></i>
+      As an affiliate, we may earn from qualifying purchases at no extra cost to you.
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class={`grid gap-6 ${layout === 'featured' ? 'md:grid-cols-1 lg:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+    {products.map((product) => (
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
+        <!-- Product Image -->
+        <div class="relative overflow-hidden">
+          <img 
+            src={product.image} 
+            alt={product.name}
+            class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
+          {product.badge && (
+            <div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-semibold">
+              {product.badge}
+            </div>
+          )}
+          <div class="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <i class="fas fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="p-6">
+          <h3 class="font-semibold text-lg text-gray-900 mb-2 line-clamp-2">
+            {product.name}
+          </h3>
+          
+          <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+            {product.description}
+          </p>
+
+          <!-- Rating -->
+          <div class="flex items-center mb-3">
+            <div class="flex text-yellow-400">
+              {Array.from({length: 5}, (_, i) => (
+                <i class={`fas fa-star ${i < product.rating ? 'text-yellow-400' : 'text-gray-300'}`}></i>
+              ))}
+            </div>
+            <span class="ml-2 text-sm text-gray-600">
+              {product.rating} ({product.reviews.toLocaleString()} reviews)
+            </span>
+          </div>
+
+          <!-- Features (if provided) -->
+          {product.features && product.features.length > 0 && (
+            <div class="mb-4">
+              <ul class="text-sm text-gray-600 space-y-1">
+                {product.features.slice(0, 3).map((feature) => (
+                  <li class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2 text-xs"></i>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <!-- Price and CTA -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl font-bold text-primary-600">{product.price}</span>
+              {product.originalPrice && (
+                <span class="text-sm text-gray-500 line-through">{product.originalPrice}</span>
+              )}
+            </div>
+          </div>
+
+          <a 
+            href={product.affiliateLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full mt-4 bg-primary-600 text-white py-3 px-4 rounded-lg hover:bg-primary-700 transition-colors font-medium text-center inline-flex items-center justify-center group"
+          >
+            <i class="fas fa-shopping-cart mr-2"></i>
+            View on Amazon
+            <i class="fas fa-external-link-alt ml-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Additional Trust Signals -->
+  <div class="mt-8 pt-6 border-t border-gray-200">
+    <div class="grid md:grid-cols-3 gap-4 text-center">
+      <div class="flex items-center justify-center text-gray-600">
+        <i class="fas fa-shield-alt text-green-500 mr-2"></i>
+        <span class="text-sm">Safe & Trusted Products</span>
+      </div>
+      <div class="flex items-center justify-center text-gray-600">
+        <i class="fas fa-truck text-blue-500 mr-2"></i>
+        <span class="text-sm">Fast & Free Shipping</span>
+      </div>
+      <div class="flex items-center justify-center text-gray-600">
+        <i class="fas fa-undo text-purple-500 mr-2"></i>
+        <span class="text-sm">Easy Returns Policy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

@@ -428,4 +428,10 @@ Trust in your body's ability to nourish your baby, be patient with yourself as y
 
 ---
 
+import ProductGrid from '@/components/ProductGrid.astro';
+
+<ProductGrid category="feeding" />
+
+---
+
 *This information is for educational purposes only and should not replace professional medical advice. Always consult with your healthcare provider or a certified lactation consultant for personalized breastfeeding support and guidance.*

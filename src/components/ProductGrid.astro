@@ -1,0 +1,194 @@
+---
+// Simplified product grid component for easy integration
+export interface Props {
+  category: string;
+  showHeader?: boolean;
+}
+
+const { category, showHeader = true } = Astro.props;
+
+// Product data organized by category
+const productData = {
+  newborn: [
+    {
+      name: "Halo Bassinest Swivel Sleeper",
+      description: "Award-winning bedside bassinet that swivels 360° for easy access",
+      price: "$199.99",
+      originalPrice: "$249.99",
+      rating: 4.5,
+      reviews: 2847,
+      features: ["360° swivel design", "Adjustable height", "Easy side-wall lowering"],
+      badge: "Bestseller"
+    },
+    {
+      name: "Dr. Brown's Anti-Colic Baby Bottles",
+      description: "Clinically proven to reduce colic, gas, and spit-up",
+      price: "$24.99",
+      rating: 4.7,
+      reviews: 8932,
+      features: ["Anti-colic vent system", "BPA-free", "Easy to clean"]
+    },
+    {
+      name: "Pampers Pure Protection Diapers",
+      description: "Hypoallergenic diapers made with plant-based materials",
+      price: "$47.99",
+      rating: 4.6,
+      reviews: 5621,
+      features: ["Plant-based materials", "Hypoallergenic", "12-hour protection"]
+    }
+  ],
+  feeding: [
+    {
+      name: "Medela Pump In Style Breast Pump",
+      description: "Hospital-grade breast pump with PersonalFit Flex technology",
+      price: "$299.99",
+      rating: 4.4,
+      reviews: 3456,
+      features: ["Hospital-grade suction", "Double pumping", "Rechargeable battery"],
+      badge: "Top Rated"
+    },
+    {
+      name: "Philips Avent Anti-Colic Bottles",
+      description: "Advanced anti-colic system for comfortable feeding",
+      price: "$29.99",
+      rating: 4.5,
+      reviews: 2198,
+      features: ["AirFree vent", "Natural latch", "Easy to clean"]
+    }
+  ],
+  pregnancy: [
+    {
+      name: "Belly Bandit Original Belly Wrap",
+      description: "Postpartum support wrap for core and back support",
+      price: "$59.99",
+      rating: 4.3,
+      reviews: 1876,
+      features: ["Medical-grade compression", "Breathable fabric", "Adjustable fit"]
+    },
+    {
+      name: "PharMeDoc Pregnancy Pillow",
+      description: "Full body maternity pillow for comfortable sleep",
+      price: "$49.99",
+      originalPrice: "$79.99",
+      rating: 4.6,
+      reviews: 7432,
+      features: ["Full body support", "Removable cover", "Hypoallergenic fill"],
+      badge: "Sale"
+    }
+  ]
+};
+
+const products = productData[category] || [];
+---
+
+{showHeader && (
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-3">Recommended Products</h2>
+    <p class="text-gray-600">Hand-picked items to make your parenting journey easier</p>
+  </div>
+)}
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  {products.map((product, index) => (
+    <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+      <!-- Product Image Placeholder -->
+      <div class="relative h-48 bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
+        <div class="text-center">
+          <i class="fas fa-baby text-4xl text-primary-400 mb-2"></i>
+          <div class="text-xs text-gray-500">Product Image</div>
+        </div>
+        {product.badge && (
+          <div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-semibold">
+            {product.badge}
+          </div>
+        )}
+      </div>
+
+      <!-- Product Details -->
+      <div class="p-6">
+        <h3 class="font-semibold text-lg text-gray-900 mb-2 leading-tight">
+          {product.name}
+        </h3>
+        
+        <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+          {product.description}
+        </p>
+
+        <!-- Rating -->
+        <div class="flex items-center mb-4">
+          <div class="flex text-yellow-400 mr-2">
+            {Array.from({length: 5}, (_, i) => (
+              <i class={`fas fa-star text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}></i>
+            ))}
+          </div>
+          <span class="text-sm text-gray-600">
+            {product.rating} ({product.reviews.toLocaleString()} reviews)
+          </span>
+        </div>
+
+        <!-- Key Features -->
+        {product.features && (
+          <div class="mb-4">
+            <ul class="text-sm text-gray-600 space-y-1">
+              {product.features.slice(0, 3).map((feature) => (
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-500 mr-2 mt-0.5 text-xs flex-shrink-0"></i>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <!-- Price -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl font-bold text-primary-600">{product.price}</span>
+            {product.originalPrice && (
+              <span class="text-sm text-gray-500 line-through">{product.originalPrice}</span>
+            )}
+          </div>
+          {product.originalPrice && (
+            <span class="text-sm font-medium text-green-600">Save 20%</span>
+          )}
+        </div>
+
+        <!-- CTA Button -->
+        <button class="w-full bg-primary-600 text-white py-3 px-4 rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center justify-center group">
+          <i class="fas fa-shopping-cart mr-2"></i>
+          View Product
+          <i class="fas fa-external-link-alt ml-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
+<!-- Trust Signals -->
+<div class="bg-gray-50 rounded-lg p-6">
+  <div class="grid md:grid-cols-4 gap-4 text-center">
+    <div class="flex flex-col items-center">
+      <i class="fas fa-award text-primary-500 text-2xl mb-2"></i>
+      <span class="text-sm font-medium text-gray-700">Expert Reviewed</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <i class="fas fa-shield-alt text-green-500 text-2xl mb-2"></i>
+      <span class="text-sm font-medium text-gray-700">Safety Certified</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <i class="fas fa-truck text-blue-500 text-2xl mb-2"></i>
+      <span class="text-sm font-medium text-gray-700">Fast Shipping</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <i class="fas fa-heart text-red-500 text-2xl mb-2"></i>
+      <span class="text-sm font-medium text-gray-700">Parent Approved</span>
+    </div>
+  </div>
+  
+  <div class="mt-4 pt-4 border-t border-gray-200 text-center">
+    <p class="text-xs text-gray-500 flex items-center justify-center">
+      <i class="fas fa-info-circle mr-2"></i>
+      As an Amazon Associate, we earn from qualifying purchases at no additional cost to you.
+    </p>
+  </div>
+</div>
