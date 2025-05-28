@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import ShareButtons from '@/components/ShareButtons.astro';
+import ProductGrid from '@/components/ProductGrid.astro';
 
 export interface Props {
   frontmatter: {
@@ -12,6 +13,7 @@ export interface Props {
     publishedDate: string;
     image?: string;
     readingTime?: string;
+    products?: string;
   };
 }
 
@@ -94,6 +96,11 @@ const formattedDate = new Date(frontmatter.publishedDate).toLocaleDateString('en
           ))}
         </div>
       </div>
+    )}
+    
+    <!-- Product Recommendations -->
+    {frontmatter.products && (
+      <ProductGrid category={frontmatter.products} />
     )}
     
     <!-- Share Buttons -->

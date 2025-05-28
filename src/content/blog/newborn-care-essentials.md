@@ -8,6 +8,7 @@ publishedDate: "2024-02-05"
 readingTime: "14 min"
 image: "https://pixabay.com/get/g7c20b5eb1ab27707ba9122e9f8d38b4167a403f59bcd3cd566ced05dca64d5ea3ebbfe5bb81445c486d1b033293742bed92ff4284f9963347b5a8d37733d41c2_1280.jpg"
 imageAlt: "Newborn baby being cared for by loving parents"
+products: "newborn"
 featured: true
 ---
 
@@ -415,12 +416,6 @@ Caring for a newborn can feel overwhelming, but remember that millions of parent
 The newborn period is intense but temporary. Focus on the basics: feeding, sleeping, diapering, and lots of love and cuddles. Everything else will fall into place as you and your baby get to know each other.
 
 Most importantly, enjoy these precious early days. Your baby will never be this small again, and despite the challenges, this is a magical time of bonding and discovery that you'll treasure forever.
-
----
-
-import ProductGrid from '@/components/ProductGrid.astro';
-
-<ProductGrid category="newborn" />
 
 ---
 
