@@ -47,8 +47,30 @@
         <a href="/contact" class="text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
       </div>
       
-      <!-- Search and Mobile Menu -->
+      <!-- Theme Switcher and Mobile Menu -->
       <div class="flex items-center space-x-4">
+        <!-- Theme Switcher -->
+        <div class="hidden md:flex items-center space-x-2 bg-white rounded-lg shadow-sm border px-3 py-2">
+          <span class="text-sm font-medium text-gray-700">Theme:</span>
+          <button
+            id="theme-pink"
+            class="w-6 h-6 rounded-full bg-pink-500 border-2 border-transparent hover:border-gray-400 transition-colors theme-btn"
+            title="Girl Theme (Pink)"
+            data-theme="pink"
+          ></button>
+          <button
+            id="theme-blue"
+            class="w-6 h-6 rounded-full bg-blue-500 border-2 border-transparent hover:border-gray-400 transition-colors theme-btn"
+            title="Boy Theme (Blue)"
+            data-theme="blue"
+          ></button>
+          <button
+            id="theme-dark"
+            class="w-6 h-6 rounded-full bg-gray-800 border-2 border-transparent hover:border-gray-400 transition-colors theme-btn"
+            title="Dark Theme"
+            data-theme="dark"
+          ></button>
+        </div>
         <!-- Search Button -->
         <button
           id="search-toggle"
@@ -111,13 +133,127 @@
         <a href="/tracker" class="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Tracker</a>
         <a href="/about" class="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">About</a>
         <a href="/contact" class="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
+        
+        <!-- Mobile Theme Switcher -->
+        <div class="px-3 py-2">
+          <span class="text-gray-900 font-medium block mb-2">Theme</span>
+          <div class="flex items-center space-x-3 pl-4">
+            <button
+              class="w-6 h-6 rounded-full bg-pink-500 border-2 border-transparent hover:border-gray-400 transition-colors theme-btn"
+              data-theme="pink"
+              title="Pink Theme"
+            ></button>
+            <button
+              class="w-6 h-6 rounded-full bg-blue-500 border-2 border-transparent hover:border-gray-400 transition-colors theme-btn"
+              data-theme="blue"
+              title="Blue Theme"
+            ></button>
+            <button
+              class="w-6 h-6 rounded-full bg-gray-800 border-2 border-transparent hover:border-gray-400 transition-colors theme-btn"
+              data-theme="dark"
+              title="Dark Theme"
+            ></button>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 </header>
 
 <script>
+  // Theme management
+  const themes = {
+    pink: {
+      primary: '#ec4899', // pink-500
+      secondary: '#f9a8d4', // pink-300
+      accent: '#fdf2f8', // pink-50
+      text: '#1f2937', // gray-800
+      background: '#ffffff'
+    },
+    blue: {
+      primary: '#3b82f6', // blue-500
+      secondary: '#93c5fd', // blue-300
+      accent: '#eff6ff', // blue-50
+      text: '#1f2937', // gray-800
+      background: '#ffffff'
+    },
+    dark: {
+      primary: '#d1d5db', // gray-300
+      secondary: '#9ca3af', // gray-400
+      accent: '#374151', // gray-700
+      text: '#f9fafb', // gray-50
+      background: '#1f2937' // gray-800
+    }
+  };
+
+  let currentTheme = 'pink';
+
+  function applyTheme(themeName) {
+    currentTheme = themeName;
+    const theme = themes[themeName];
+    const root = document.documentElement;
+    
+    // Update CSS custom properties
+    root.style.setProperty('--theme-primary', theme.primary);
+    root.style.setProperty('--theme-secondary', theme.secondary);
+    root.style.setProperty('--theme-accent', theme.accent);
+    root.style.setProperty('--theme-text', theme.text);
+    root.style.setProperty('--theme-background', theme.background);
+    
+    // Apply theme classes
+    if (themeName === 'dark') {
+      document.body.classList.add('dark-theme');
+      document.body.style.backgroundColor = theme.background;
+      document.body.style.color = theme.text;
+    } else {
+      document.body.classList.remove('dark-theme');
+      document.body.style.backgroundColor = '#fef7f0'; // warm-50
+      document.body.style.color = theme.text;
+    }
+    
+    // Update primary colored elements
+    const primaryElements = document.querySelectorAll('.text-primary-600, .bg-primary-600, .border-primary-600, .hover\\:text-primary-600, .hover\\:bg-primary-700');
+    primaryElements.forEach(el => {
+      if (el.classList.contains('text-primary-600') || el.classList.contains('hover:text-primary-600')) {
+        el.style.color = theme.primary;
+      }
+      if (el.classList.contains('bg-primary-600')) {
+        el.style.backgroundColor = theme.primary;
+      }
+      if (el.classList.contains('border-primary-600')) {
+        el.style.borderColor = theme.primary;
+      }
+    });
+    
+    // Update button borders to show active theme
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.style.borderColor = 'transparent';
+    });
+    document.querySelectorAll(`[data-theme="${themeName}"]`).forEach(btn => {
+      btn.style.borderColor = theme.primary;
+      btn.style.borderWidth = '2px';
+    });
+    
+    // Save theme preference
+    localStorage.setItem('siteTheme', themeName);
+    
+    // Dispatch custom event for other components
+    window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: themeName } }));
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    // Load saved theme or default to pink
+    const savedTheme = localStorage.getItem('siteTheme') || 'pink';
+    applyTheme(savedTheme);
+    
+    // Add event listeners to theme buttons
+    document.querySelectorAll('.theme-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const theme = this.getAttribute('data-theme');
+        applyTheme(theme);
+      });
+    });
+    
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -154,4 +290,53 @@
       }
     });
   });
+
+  // Apply theme on navigation (for SPA-like behavior)
+  document.addEventListener('astro:page-load', function() {
+    const savedTheme = localStorage.getItem('siteTheme') || 'pink';
+    applyTheme(savedTheme);
+  });
 </script>
+
+<style>
+  /* Custom CSS properties for theme colors */
+  :root {
+    --theme-primary: #ec4899;
+    --theme-secondary: #f9a8d4;
+    --theme-accent: #fdf2f8;
+    --theme-text: #1f2937;
+    --theme-background: #ffffff;
+  }
+  
+  /* Dark theme specific styles */
+  .dark-theme {
+    background-color: var(--theme-background) !important;
+    color: var(--theme-text) !important;
+  }
+  
+  .dark-theme nav {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+  }
+  
+  .dark-theme .bg-white {
+    background-color: #374151 !important;
+    color: #f9fafb !important;
+  }
+  
+  .dark-theme .text-gray-700,
+  .dark-theme .text-gray-600,
+  .dark-theme .text-gray-900 {
+    color: #f9fafb !important;
+  }
+  
+  .dark-theme .border-gray-200,
+  .dark-theme .border-gray-300 {
+    border-color: #4b5563 !important;
+  }
+  
+  /* Smooth transitions for theme changes */
+  * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+</style>

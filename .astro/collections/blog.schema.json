@@ -48,7 +48,10 @@
         },
         "draft": {
           "type": "boolean",
-          "default": false
+          "default": true
+        },
+        "products": {
+          "type": "string"
         },
         "seo": {
           "type": "object",

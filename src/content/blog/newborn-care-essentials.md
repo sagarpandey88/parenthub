@@ -1,14 +1,14 @@
 ---
-title: "Newborn Care Essentials: Your Complete Guide to Caring for Your New Baby"
+title: "Newbor1n Care Essentials: Your Complete Guide to Caring for Your New Baby"
 description: "Everything new parents need to know about caring for their newborn, from feeding and diapering to sleep patterns and recognizing important health cues in the first weeks of life."
 category: "Post-Pregnancy"
 tags: ["newborn care", "baby basics", "feeding", "diapering", "sleep", "infant health"]
 author: "Dr. Rebecca Thompson, Pediatrician"
 publishedDate: "2024-02-05"
 readingTime: "14 min"
+products: "newborn"
 image: "https://pixabay.com/get/g7c20b5eb1ab27707ba9122e9f8d38b4167a403f59bcd3cd566ced05dca64d5ea3ebbfe5bb81445c486d1b033293742bed92ff4284f9963347b5a8d37733d41c2_1280.jpg"
 imageAlt: "Newborn baby being cared for by loving parents"
-products: "newborn"
 featured: true
 ---
 

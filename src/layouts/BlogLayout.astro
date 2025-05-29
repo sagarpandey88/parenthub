@@ -100,7 +100,7 @@ const formattedDate = new Date(frontmatter.publishedDate).toLocaleDateString('en
     
     <!-- Product Recommendations -->
     {frontmatter.products && (
-      <ProductGrid category={frontmatter.products} />
+      <ProductGrid category={frontmatter.products} showHeader={true} />
     )}
     
     <!-- Share Buttons -->
